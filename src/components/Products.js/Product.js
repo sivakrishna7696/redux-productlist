@@ -1,8 +1,12 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { addToCart } from '../redux/ActionCreators';
+import { useDispatch } from 'react-redux'
 
 function Product() {
+  const dispatch = useDispatch()
+  
 const [product,setProduct] = useState({});
 
 const getTheSingleProduct = async()=>{
@@ -10,6 +14,11 @@ const getTheSingleProduct = async()=>{
     console.log(data)
     setProduct(data);
 }
+
+  const handleClick  = (product)=>{
+    dispatch(addToCart(product));
+    console.log(product);
+  }
 
   useEffect(()=>{
     getTheSingleProduct();
@@ -41,7 +50,7 @@ const getTheSingleProduct = async()=>{
                             <p>description : {product.description}</p>
                         </div>
                         <div>
-                          <button className='btn btn-info px-3 py-2'>Add to cart</button>
+                          <button className='btn btn-info px-3 py-2' onClick={()=>handleClick(product)}>Add to cart</button>
                         </div>
                     </div>
                   </div>
